@@ -38,6 +38,25 @@ function render(){
 
 function renderTodo(todo) {
   return `<li>
-  <input type="checkbox" ${todo.checked ? "checked": ""}><span>${todo.text}</span><button>delete</button>
+  <input type="checkbox" ${todo.checked ? "checked": ""}><span>${todo.text}</span><button onClick="deleteTodo(${todo.id})">delete</button>
   </li>`
 }
+
+function deleteTodo(id){
+  console.log('from deleteTodo')
+  todos = todos.filter(todo => todo.id !== id);
+  render()
+}
+
+function toggleTodo(id) {
+  for (let i = 0; i < todos.length; i++)  {
+    if (todos[i].id === id) {
+      todos[i].checked = !todos[i].checked;
+    }
+  }
+
+  todos = todos.map(todo =>
+    todo.id === id ? {... todo, checked: !todo.checked } : todo)
+
+    render()
+ }
