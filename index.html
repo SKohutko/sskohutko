@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список справ</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Список справ</h1>
-        <div class="controls">
-            <button class="button" onclick="newTodo()">Додати справу</button>
+<html>
+  <head>
+    <title>TODO App</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container center">
+      <div class="header">
+        <div class="header-text">
+      <h1 class="center title">My TODO App</h1>
         </div>
-        <div class="todo-list" id="todo-list">
-            <!-- Сюди будуть додаватися справи -->
-        </div>
-        <div class="footer">
-            <span>Загальна кількість справ: <span id="item-count">0</span></span>
-            <span>Незроблені справи: <span id="unchecked-count">0</span></span>
-        </div>
+      </div>
+      <div class="flow-right controls">
+        <span>Item count: <span id="item-count">0</span></span>
+        <span>Unchecked count: <span id="unchecked-count">0</span></span>
+      </div>
+      <button class="button center" onClick="newTodo()">New TODO</button>
+      <ul id="todo-list" class="todo-list"></ul>
     </div>
-    <script src="script.js"></script>
-</body>
+    <script src="./script.js"></script>
+  </body>
 </html>
+
