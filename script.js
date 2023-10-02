@@ -49,10 +49,19 @@ function deleteTodo(id) {
 }
 
 function toggleTodo(id) {
-  todos = todos.map(todo =>
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].id === id) {
+      todos[i].checked = !todos[i].checked;
+    }
+  }
+
+  todos = todos.map((todo) =>
     todo.id === id ? { ...todo, checked: !todo.checked } : todo
   );
+
   render();
+
+  uncheckedCountSpan.innerHTML = todos.filter((todo) => !todo.checked).length;
 }
 
 window.onload = function () {
