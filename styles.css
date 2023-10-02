@@ -3,9 +3,24 @@
 }
 
 html, body {
-  background-color: #eee;
   margin: 0;
   padding: 0;
+}
+
+.header {
+
+background-color: antiquewhite;
+margin-bottom: 20px;
+}
+
+.header-text {
+
+  margin-left: 286px;
+}
+
+.center title {
+
+
 }
 
 ul {
@@ -64,3 +79,4 @@ ul {
 .todo-container:first-of-type {
   border-top: 1px solid #333;
 }
+
