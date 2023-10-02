@@ -11,66 +11,40 @@ const uncheckedCountSpan = document.getElementById('unchecked-count')
 
 let todos = [];
 
-function loadTodos() {
-  const storedTodos = localStorage.getItem('todos');
-  return storedTodos ? JSON.parse(storedTodos) : [];
-}
-
-function saveTodos() {
-  localStorage.setItem('todos', JSON.stringify(todos));
-}
-
-function updateTodos() {
-  render();
-  saveTodos();
-}
-
 function newTodo() {
-  const text = window.prompt("Введіть нову справу");
-  if (text) {
-    const todo = { id: numb++, text, checked: false };
+    let text = window.prompt("Введіть справу");
+    let todo = { id: Date.now(), text, checked: false };
     todos.push(todo);
-    updateTodos();
-  }
-}
-
-function deleteTodo(id) {
-  todos = todos.filter(todo => todo.id !== id);
-  updateTodos();
-}
-
-function toggleTodo(id) {
-  todos = todos.map(todo =>
-    todo.id === id ? { ...todo, checked: !todo.checked } : todo
-  );
-  updateTodos();
-}
-
-const list = document.getElementById('todo-list');
-const itemCountSpan = document.getElementById('item-count');
-const uncheckedCountSpan = document.getElementById('unchecked-count');
-
-let todos = [];
-let numb = 1;
-
-window.onload = () => {
-  todos = loadTodos();
-  render();
-};
-
-function renderTodo(todo) {
-  return `<li>
-    <input type="checkbox" ${todo.checked ? "checked" : ""} onchange="toggleTodo(${todo.id})">
-    <span>${todo.text}</span>
-    <button onclick="deleteTodo(${todo.id})">Видалити</button>
-  </li>`;
+    render();
 }
 
 function render() {
-  list.innerHTML = todos.map(todo => renderTodo(todo)).join('');
-  itemCountSpan.innerText = todos.length;
-  uncheckedCountSpan.innerText = todos.filter(todo => !todo.checked).length;
+    list.innerHTML = todos.map(todo => renderTodo(todo)).join('');
+    itemCountSpan.innerHTML = todos.length;
+    uncheckedCountSpan.innerHTML = todos.filter(todo => !todo.checked).length;
 }
+
+function renderTodo(todo) {
+    return `<div class="${classNames.TODO_ITEM}">
+        <input class="${classNames.TODO_CHECKBOX}" type="checkbox" ${todo.checked ? "checked" : ""} onchange="toggleTodo(${todo.id})">
+        <span class="${classNames.TODO_TEXT}">${todo.text}</span>
+        <button class="${classNames.TODO_DELETE}" onclick="deleteTodo(${todo.id})">Видалити</button>
+    </div>`;
+}
+
+function deleteTodo(id) {
+    todos = todos.filter(todo => todo.id !== id);
+    render();
+}
+
+function toggleTodo(id) {
+    todos = todos.map(todo =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    );
+    render();
+}
+
+render();
 
 
 
