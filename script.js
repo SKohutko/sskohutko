@@ -44,6 +44,7 @@ function renderTodo(todo) {
 }
 
 function deleteTodo(id) {
+  console.log('from deleteTodo')
   todos = todos.filter(todo => todo.id !== id);
   render();
 }
@@ -55,14 +56,12 @@ function toggleTodo(id) {
     }
   }
 
-  todos = todos.map((todo) =>
-    todo.id === id ? { ...todo, checked: !todo.checked } : todo
-  );
+  todos = todos.map(todo =>
+    todo.id === id ? { ...todo, checked: !todo.checked } : todo);
 
   render();
-
-  uncheckedCountSpan.innerHTML = todos.filter((todo) => !todo.checked).length;
 }
+
 
 window.onload = function () {
   inputTodo.focus();
