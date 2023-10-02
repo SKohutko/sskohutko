@@ -5,58 +5,57 @@ const classNames = {
   TODO_DELETE: 'todo-delete',
 }
 
-const list = document.getElementById('todo-list')
-const itemCountSpan = document.getElementById('item-count')
-const uncheckedCountSpan = document.getElementById('unchecked-count')
+const list = document.getElementById('todo-list');
+const itemCountSpan = document.getElementById('item-count');
+const uncheckedCountSpan = document.getElementById('unchecked-count');
+const inputTodo = document.getElementById('input-todo');
 
 let todos = [];
 
-//todo = {id: number, text: string, checked: boolean}
-
-/*
-let numb = 1;
 function newTodo() {
- list.insertAdjacentHTML('beforeend', `<li><input type="checkbox"><span>Text ${numb++}</span><button onClick="this.parentElement.remove()">delete</button></li>`)
-}
-*/
-
-let numb = 1;
-function newTodo() {
- let text = window.prompt("enter todo");
- let todo = {id: numb++, text, checked: true };
- todos.push(todo);
- console.log('todos', todos);
- render(); 
+  const text = inputTodo.value.trim();
+  if (text) {
+    const todo = { id: generateId(), text, checked: false };
+    todos.push(todo);
+    inputTodo.value = '';
+    render();
+  }
 }
 
+function generateId() {
+  return '_' + Math.random().toString(36).substr(2, 9);
+}
 
-function render(){
+function render() {
   list.innerHTML = todos.map(todo => renderTodo(todo)).join('');
-  itemCountSpan.innerHTML = todos.length
-  uncheckedCountSpan.innerHTML = todos.filter(todo => !todo.checked).length
+  itemCountSpan.innerHTML = todos.length;
+  uncheckedCountSpan.innerHTML = todos.filter(todo => !todo.checked).length;
 }
 
 function renderTodo(todo) {
-  return `<li>
-  <input type="checkbox" ${todo.checked ? "checked": ""}><span>${todo.text}</span><button onClick="deleteTodo(${todo.id})">delete</button>
-  </li>`
+  return `<li class="${classNames.TODO_ITEM}">
+    <input type="checkbox" class="${classNames.TODO_CHECKBOX}" 
+      onclick="toggleTodo('${todo.id}')"
+      ${todo.checked ? 'checked' : ''}>
+    <span class="${classNames.TODO_TEXT}">${todo.text}</span>
+    <button class="${classNames.TODO_DELETE}" 
+      onclick="deleteTodo('${todo.id}')">Delete</button>
+  </li>`;
 }
 
-function deleteTodo(id){
-  console.log('from deleteTodo')
+function deleteTodo(id) {
   todos = todos.filter(todo => todo.id !== id);
-  render()
+  render();
 }
 
 function toggleTodo(id) {
-  for (let i = 0; i < todos.length; i++)  {
-    if (todos[i].id === id) {
-      todos[i].checked = !todos[i].checked;
-    }
-  }
-
   todos = todos.map(todo =>
-    todo.id === id ? {... todo, checked: !todo.checked } : todo)
+    todo.id === id ? { ...todo, checked: !todo.checked } : todo
+  );
+  render();
+}
 
-    render()
- }
+window.onload = function () {
+  inputTodo.focus();
+  render();
+};
